@@ -20,6 +20,7 @@
 
 #import "RLMAccessor.h"
 #import "RLMArray_Private.hpp"
+#import "RLMDecimal128.h"
 #import "RLMListBase.h"
 #import "RLMObjectSchema_Private.hpp"
 #import "RLMObjectStore.h"
@@ -118,6 +119,9 @@ static id validatedObjectForProperty(__unsafe_unretained id const obj,
             return ret;
         }
         return coerceToObjectType(obj, objectClass, schema);
+    }
+    else if (prop.type == RLMPropertyTypeDecimal128 && !prop.array) {
+        return [[RLMDecimal128 alloc] initWithValue:obj];
     }
     return obj;
 }
@@ -468,7 +472,7 @@ id RLMObjectFreeze(RLMObjectBase *obj) {
     }
     RLMRealm *frozenRealm = [obj->_realm freeze];
     RLMObjectBase *frozen = RLMCreateManagedAccessor(obj.class, &frozenRealm->_info[obj->_info->rlmObjectSchema.className]);
-    frozen->_row = frozenRealm->_realm->transaction().import_copy_of(obj->_row);
+    frozen->_row = frozenRealm->_realm->import_copy_of(obj->_row);
     return frozen;
 }
 

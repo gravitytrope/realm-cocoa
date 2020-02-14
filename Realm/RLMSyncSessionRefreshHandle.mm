@@ -259,6 +259,9 @@ static const NSTimeInterval RLMRefreshBuffer = 10;
         return;
     }
 
+    // FIXME: [realmapp] This still potentially has use. It is unclear at the moment
+    // FIXME: if this should be handled in the OS or at this layer.
+#if 0
     NSDictionary *json = @{
                            kRLMSyncProviderKey: @"realm",
                            kRLMSyncPathKey: @(_path.c_str()),
@@ -270,12 +273,11 @@ static const NSTimeInterval RLMRefreshBuffer = 10;
     RLMSyncCompletionBlock handler = ^(NSError *error, NSDictionary *json) {
         [weakSelf _onRefreshCompletionWithError:error json:json];
     };
-// FIXME: [realmapp] This still potentially has use. It is unclear at the moment
-// FIXME: if this should be handled in the OS or at this layer.
-//    [RLMSyncAuthEndpoint sendRequestToServer:self.authServerURL
-//                                        JSON:json
-//                                     timeout:60.0
-//                                  completion:handler];
+    [RLMSyncAuthEndpoint sendRequestToServer:self.authServerURL
+                                        JSON:json
+                                     timeout:60.0
+                                  completion:handler];
+#endif
 }
 
 @end
