@@ -1,7 +1,10 @@
 x.y.z Release notes (yyyy-MM-dd)
 =============================================================
 ### Enhancements
-* None.
+* Add support for embedded objects. Embedded objects are objects which are
+  owned by a single parent object, and are deleted when that parent object is
+  deleted. They are defined by subclassing `EmbeddedObject` /
+  `RLMEmbeddedObject` rather than `Object` / `RLMObject`.
 
 ### Fixed
 * <How to hit and notice issue? what was the impact?> ([#????](https://github.com/realm/realm-js/issues/????), since v?.?.?)
